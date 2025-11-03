@@ -1,0 +1,17 @@
+# Node/React
+vfacil-frontend/node_modules/
+vfacil-frontend/dist/
+vfacil-frontend/.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+.vscode/
+
+# SO
+.DS_Store
+Thumbs.db
