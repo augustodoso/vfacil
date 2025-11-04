@@ -1,17 +1,6 @@
-# Node/React
-vfacil-frontend/node_modules/
-vfacil-frontend/dist/
-vfacil-frontend/.env
+# cria/atualiza .gitignore
+echo ".idea/"        >> .gitignore
+echo ".venv/"        >> .gitignore
+echo "__pycache__/"  >> .gitignore
+echo "*.pyc"         >> .gitignore
 
-# Python
-.venv/
-__pycache__/
-*.pyc
-
-# IDE
-.idea/
-.vscode/
-
-# SO
-.DS_Store
-Thumbs.db
