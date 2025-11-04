@@ -45,7 +45,6 @@ vfacil/
 
 ### Backend (FastAPI)
 
-```bash
 # Cria o ambiente virtual
 python -m venv venv
 
