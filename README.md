@@ -41,7 +41,7 @@ Instalar dependências:
 pip install -r requirements.txt
 
 Subir a API
-uvicorn app.main:app --reload --port 8000
+uvicorn vfacil.vfacil_api.main:app --reload --port 8000
 # Abra: http://127.0.0.1:8000/docs
 
 🧭 Endpoints (MVP – sujeitos a mudança)
