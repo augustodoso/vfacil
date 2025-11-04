@@ -1,79 +1,89 @@
-# 💼 V-Fácil — API de Automação Fiscal
+# V-Fácil — Backend FastAPI para Gestão Fiscal Simples
 
-API desenvolvida em **Python (FastAPI)** para processamento, leitura e automação de documentos fiscais (como notas XML), com integração modular e suporte a front-end via API REST.
+![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Em%20uso-teal)
+![Status](https://img.shields.io/badge/Status-Em%20desenvolvimento-yellow)
 
----
+Plataforma em construção para **autônomos e pequenos negócios (MEI)** organizarem notas, recibos e documentos fiscais de forma simples.
 
-## 🚀 Tecnologias Utilizadas
-
-- **Python 3.11+**
-- **FastAPI**
-- **Uvicorn**
-- **Pydantic**
-- **SQLAlchemy**
-- **dotenv**
-- **CORS Middleware**
+> **Objetivo:** centralizar documentos, facilitar consulta e preparar terreno para recursos de OCR, extração de campos e relatórios mensais.
 
 ---
 
-## ⚙️ Estrutura do Projeto
-
-vfacil/
-├── vfacil_api/
-│ ├── database/
-│ ├── models/
-│ ├── services/
-│ ├── utils/
-│ └── main.py
-├── requirements.txt
-├── README.md
-└── .gitignore
-
+## ✨ Funcionalidades (MVP / Planejadas)
+- ✅ API FastAPI com estrutura de serviços e utilitários
+- ✅ Documentação automática via **Swagger** (`/docs`)
+- 🧩 Upload de documentos (WIP)
+- 🧩 Remoção/listagem de documentos (WIP)
+- 🧩 OCR/extração de campos (planejado)
+- 🧩 Relatórios mensais e exportação (planejado)
 
 ---
 
-## 🧠 Funcionalidades
+## 🚀 Como rodar localmente
 
-- Leitura e tratamento de arquivos XML de notas fiscais  
-- CRUD básico (cadastro, leitura e exclusão de documentos)  
-- Integração entre backend FastAPI e frontend (React/Vite)  
-- Estrutura preparada para deploy em nuvem  
+### 1) Clonar o projeto
+```bash
+git clone https://github.com/augustodoso/vfacil.git
+cd vfacil
 
----
+Criar e ativar o ambiente
+Windows (PowerShell):
 
-## ▶️ Como Rodar o Projeto
+python -m venv .venv
+.venv\Scripts\Activate.ps1
 
-### Backend (FastAPI)
+Linux/Mac:
+python3 -m venv .venv
+source .venv/bin/activate
 
-# Cria o ambiente virtual
-python -m venv venv
-
-# Ativa o ambiente (Windows)
-venv\Scripts\activate
-
-# Instala dependências
+Instalar dependências:
 pip install -r requirements.txt
 
-# Executa o servidor
-uvicorn vfacil_api.main:app --reload
+Subir a API
+uvicorn app.main:app --reload --port 8000
+# Abra: http://127.0.0.1:8000/docs
 
-Frontend (Vite/React)
-cd vfacil-frontend
-npm install
-npm run dev
+🧭 Endpoints (MVP – sujeitos a mudança)
+| Método | Rota               | Descrição                     |
+| -----: | ------------------ | ----------------------------- |
+|    GET | `/docs`            | Swagger UI                    |
+|    GET | `/api/docs`        | Lista documentos (WIP)        |
+|   POST | `/api/upload`      | Envia novo arquivo (WIP)      |
+| DELETE | `/api/delete/{id}` | Remove documento por id (WIP) |
 
-📂 API Endpoints
-Método	Rota	Descrição
-GET	/api/docs	Lista documentos
-POST	/api/upload	Envia novo arquivo
-DELETE	/api/delete/{id}	Remove um documento
+🗂️ Estrutura do projeto
+vfacil/
+├─ app/
+│  ├─ database/        # Persistência (futuro)
+│  ├─ services/        # Regras de negócio (OCR, parser, etc.)
+│  ├─ utils/           # Helpers/validações
+│  └─ main.py          # App FastAPI (ponto de entrada)
+├─ requirements.txt
+└─ README.md
 
-🧩 Autor
+🛣️ Roadmap
+
+ OCR das notas (Tesseract/Azure Vision)
+
+ Extração (emitente, CNPJ, valor, data)
+
+ Alertas de vencimento por e-mail
+
+ Exportação mensal (CSV/PDF)
+
+ Integração simples com contabilidade
+
+🤝 Contribuição
+
+Sugestões e PRs são bem-vindos. Abra uma issue descrevendo seu caso/ideia.
+
+📄 Licença
+
+Este projeto está sob a licença MIT — veja o arquivo LICENSE.
+
+👤 Autor
 
 Augusto Cezar de Macedo Doso
-GitHub
- • LinkedIn
-
-Projeto desenvolvido como parte de estudos e portfólio para estágio em desenvolvimento backend.
-© 2025 — Todos os direitos reservados.
+GitHub: @augustodoso
 
