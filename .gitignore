@@ -1,6 +1,7 @@
-# cria/atualiza .gitignore
-echo ".idea/"        >> .gitignore
-echo ".venv/"        >> .gitignore
-echo "__pycache__/"  >> .gitignore
-echo "*.pyc"         >> .gitignore
+.idea/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
 
