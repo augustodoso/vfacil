@@ -16,7 +16,7 @@ COPY . .
 
 # Instala as dependências do backend
 # (ajustado para o seu caminho: vfacil/vfacil_api/requirements.txt)
-RUN pip install --no-cache-dir -r vfacil/vfacil_api/requirements.txt
+RUN pip install --no-cache-dir -r vfacil_api/requirements.txt
 
 # (Opcional) Ajuste de path dos dados do Tesseract
 ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata
