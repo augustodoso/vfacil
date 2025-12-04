@@ -1,31 +1,32 @@
-# 1) Imagem base
+# Imagem base
 FROM python:3.11-slim
 
-# 2) Instala Tesseract + idioma português
+# 1) Dependências do sistema (Tesseract + português)
 RUN apt-get update && \
-    apt-get install -y tesseract-ocr tesseract-ocr-por && \
+    apt-get install -y --no-install-recommends \
+        tesseract-ocr \
+        tesseract-ocr-por && \
     rm -rf /var/lib/apt/lists/*
 
-# 3) Diretório de trabalho dentro do container
+# 2) Diretório de trabalho dentro do container
 WORKDIR /app
 
-# 4) Copia o requirements.txt da raiz do projeto
-COPY requirements.txt .
+# 3) Copia só o requirements do backend
+# (ele está em vfacil/vfacil_api/requirements.txt no seu repo)
+COPY vfacil/vfacil_api/requirements.txt ./requirements.txt
 
-# 5) Instala as dependências do backend
+# 4) Instala as libs Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 6) Copia apenas a pasta do backend para dentro do container
-COPY vfacil ./vfacil
+# 5) Copia o código do backend (pacote vfacil + vfacil_api)
+COPY vfacil/ ./vfacil
 
-# 7) Ajuste opcional do path de dados do Tesseract (por segurança)
+# 6) (Opcional) path dos dados do Tesseract
 ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata
 
-# 8) Vamos trabalhar de dentro da pasta que tem o main.py
-WORKDIR /app/vfacil/vfacil_api
-
-# 9) Expõe a porta usada pelo Uvicorn
+# 7) Porta exposta
 EXPOSE 8000
 
-# 10) Sobe a API FastAPI apontando pro main.py local
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# 8) Sobe o FastAPI apontando para o módulo completo
+#    vfacil.vfacil_api.main:app  (e não só "main:app")
+CMD ["uvicorn", "vfacil.vfacil_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
