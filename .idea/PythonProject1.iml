@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
+<module version="4">
+  <component name="NewModuleRootManager">
+=======
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.venv" />
+    </content>
+>>>>>>> 64d829d (feat: frontend React (chat/docs/upload) + backend FastAPI (rotas /api/docs, /api/upload, /api/chat) e CORS)
+    <orderEntry type="jdk" jdkName="Python 3.14 (PythonProject1)" jdkType="Python SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
