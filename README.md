@@ -1,89 +1,100 @@
-# V-Fácil — Backend FastAPI para Gestão Fiscal Simples
+# Aurevix NFE · OCR + IA para Notas Fiscais
+*(Projeto originalmente iniciado como “v-facil”, agora evoluído para Aurevix NFE)*
 
-![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-Em%20uso-teal)
-![Status](https://img.shields.io/badge/Status-Em%20desenvolvimento-yellow)
+Aurevix NFE é um sistema completo que combina **OCR (Tesseract)** com **IA Generativa (OpenAI)** para extrair e analisar informações direto de **imagens de notas fiscais**.
 
-Plataforma em construção para **autônomos e pequenos negócios (MEI)** organizarem notas, recibos e documentos fiscais de forma simples.
+Ele é capaz de:
 
-> **Objetivo:** centralizar documentos, facilitar consulta e preparar terreno para recursos de OCR, extração de campos e relatórios mensais.
-
----
-
-## ✨ Funcionalidades (MVP / Planejadas)
-- ✅ API FastAPI com estrutura de serviços e utilitários
-- ✅ Documentação automática via **Swagger** (`/docs`)
-- 🧩 Upload de documentos (WIP)
-- 🧩 Remoção/listagem de documentos (WIP)
-- 🧩 OCR/extração de campos (planejado)
-- 🧩 Relatórios mensais e exportação (planejado)
+- Ler imagens de notas (PNG/JPG/PDF)
+- Extrair texto com OCR
+- Identificar CNPJ, valor, data de emissão
+- Enviar o texto para **IA** gerar:
+  - Empresa responsável
+  - Valor total corrigido
+  - Categoria de gasto
+  - Detalhes e observações
+- Registrar histórico das notas processadas
+- Exibir tudo em uma interface moderna em React + Tailwind
 
 ---
 
-## 🚀 Como rodar localmente
+# 🚀 Tecnologias Utilizadas
 
-### 1) Clonar o projeto
-```bash
-git clone https://github.com/augustodoso/vfacil.git
-cd vfacil
+### Frontend
+- React (Vite)
+- Tailtail CSS
+- Fetch API para comunicação com backend
 
-Criar e ativar o ambiente
-Windows (PowerShell):
+### Backend
+- FastAPI
+- Python 3.11
+- Tesseract OCR (`pytesseract`)
+- Pillow
+- OpenAI API (GenAI)
+- Regex para extração via texto
 
-python -m venv .venv
-.venv\Scripts\Activate.ps1
+### Infra / Outros
+- Tesseract instalado localmente
+- `.env` com OpenAI API Key (**não é enviado ao GitHub**)
+- Ambiente virtual Python
 
-Linux/Mac:
-python3 -m venv .venv
-source .venv/bin/activate
+---
 
-Instalar dependências:
-pip install -r requirements.txt
+# 🏗 Estrutura do Repositório
 
-Subir a API
-uvicorn vfacil.vfacil_api.main:app --reload --port 8000
-# Abra: http://127.0.0.1:8000/docs
-
-🧭 Endpoints (MVP – sujeitos a mudança)
-| Método | Rota               | Descrição                     |
-| -----: | ------------------ | ----------------------------- |
-|    GET | `/docs`            | Swagger UI                    |
-|    GET | `/api/docs`        | Lista documentos (WIP)        |
-|   POST | `/api/upload`      | Envia novo arquivo (WIP)      |
-| DELETE | `/api/delete/{id}` | Remove documento por id (WIP) |
-
-🗂️ Estrutura do projeto
+```
 vfacil/
-├─ app/
-│  ├─ database/        # Persistência (futuro)
-│  ├─ services/        # Regras de negócio (OCR, parser, etc.)
-│  ├─ utils/           # Helpers/validações
-│  └─ main.py          # App FastAPI (ponto de entrada)
-├─ requirements.txt
-└─ README.md
+│
+├── vfacil_api/
+│   ├── main.py                # Ponto inicial da API
+│   ├── services/
+│   │   ├── ocr_service.py     # OCR e parsing da nota
+│   │   └── genai_service.py   # Integração com IA
+│   ├── utils/
+│   │   └── ocr_config.py      # Caminho do Tesseract
+│   ├── database/              # (para versão futura)
+│   ├── models/
+│   └── .env                   # API KEY da OpenAI (NUNCA COMITAR!)
+│
+└── vfacil-frontend/
+    ├── src/
+    │   ├── pages/Upload.jsx   # Tela principal
+    │   ├── components/
+    │   └── assets/
+    └── public/
+```
 
-🛣️ Roadmap
+---
 
- OCR das notas (Tesseract/Azure Vision)
+# ⚙️ Rodando o Projeto Localmente
 
- Extração (emitente, CNPJ, valor, data)
+## Backend
 
- Alertas de vencimento por e-mail
+```
+cd vfacil
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn vfacil_api.main:app --reload
+```
 
- Exportação mensal (CSV/PDF)
+Crie o arquivo **vfacil_api/.env**:
 
- Integração simples com contabilidade
+```
+OPENAI_API_KEY=sk-xxxxx
+```
 
-🤝 Contribuição
+## Frontend
 
-Sugestões e PRs são bem-vindos. Abra uma issue descrevendo seu caso/ideia.
+```
+cd vfacil-frontend
+npm install
+npm run dev
+```
 
-📄 Licença
+Acesse: http://localhost:5173
 
-Este projeto está sob a licença MIT — veja o arquivo LICENSE.
+---
 
-👤 Autor
-
-Augusto Cezar de Macedo Doso
-GitHub: @augustodoso
-
+# ✨ Criado por Augusto Cezar — Aurevix Tech  
+*"Technology Crafted With Precison"*

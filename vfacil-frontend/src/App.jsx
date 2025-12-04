@@ -1,21 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import Docs from "./pages/Docs";
-import Upload from "./pages/Upload";
-import Chat from "./pages/Chat";
-import Sobre from "./pages/Sobre";
+import UploadPage from "./pages/Upload";
+import Header from "./components/Header";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      <Header />
       <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/docs" element={<Docs/>} />
-        <Route path="/upload" element={<Upload/>} />
-        <Route path="/chat" element={<Chat/>} />
-        <Route path="/sobre" element={<Sobre/>} />
+        <Route path="/" element={<UploadPage />} />
       </Routes>
     </BrowserRouter>
   );

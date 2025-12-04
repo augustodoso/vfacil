@@ -1,28 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "vfacil-frontend",
-  "version": "1.0.0",
-  "private": true,
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.16",
-    "tailwindcss": "^4.1.16",
-    "vite": "^5.0.0",
-    "gh-pages": "^6.0.0"
-  },
-  "dependencies": {
-    "@alloc/quick-lru": "^5.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
-=======
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.16",
-    "tailwindcss": "^4.1.16"
->>>>>>> 64d829d (feat: frontend React (chat/docs/upload) + backend FastAPI (rotas /api/docs, /api/upload, /api/chat) e CORS)
-  }
+  "name": "pythonproject1",
+  "version": "1.0.0"
 }
