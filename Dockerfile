@@ -13,13 +13,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 5) Copia a pasta do backend (a pasta "vfacil" inteira)
 COPY vfacil ./vfacil
 
-# 6) Muda o diretório de trabalho para dentro da pasta do backend
-#    Dentro do container agora estamos em /app/vfacil
-WORKDIR /app/vfacil
+# 6) Muda o diretório de trabalho para dentro da pasta onde está o main.py
+#    Estrutura no repo:
+#      /vfacil/vfacil_api/main.py
+WORKDIR /app/vfacil/vfacil_api
 
 # 7) Expõe a porta da API
 EXPOSE 8000
 
 # 8) Sobe a API FastAPI com Uvicorn
-#    Repara que AGORA o módulo é "vfacil_api.main:app"
-CMD ["uvicorn", "vfacil_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+#    Aqui a gente manda rodar o arquivo main.py direto
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
