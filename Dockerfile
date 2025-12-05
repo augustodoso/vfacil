@@ -1,7 +1,7 @@
 # Imagem base do Python
 FROM python:3.11-slim
 
-# Define a pasta de trabalho dentro do container
+# Pasta de trabalho dentro do container
 WORKDIR /app
 
 # Copia o requirements.txt da raiz do repositório
@@ -17,6 +17,6 @@ COPY . .
 EXPOSE 8000
 
 # Sobe a API FastAPI com Uvicorn
-# Repara que aqui usamos exatamente o caminho do seu app:
-# vfacil/vfacil_api/main.py  ->  vfacil.vfacil_api.main:app
+# Estrutura do seu repositório:
+#   vfacil/vfacil_api/main.py → módulo vfacil.vfacil_api.main
 CMD ["uvicorn", "vfacil.vfacil_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
