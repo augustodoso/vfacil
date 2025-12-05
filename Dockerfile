@@ -4,27 +4,22 @@ FROM python:3.11-slim
 # Pasta de trabalho base
 WORKDIR /app
 
-# --- OPCIONAL, MAS RECOMENDADO: instalar Tesseract para o OCR ---
+# (opcional, mas recomendado) instala o Tesseract pra OCR
 RUN apt-get update && apt-get install -y tesseract-ocr && rm -rf /var/lib/apt/lists/*
-# -----------------------------------------------------------------
 
-# Copia o requirements.txt da raiz do repositório
+# Copia requirements e instala dependências
 COPY requirements.txt .
-
-# Instala as dependências do backend
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia TODO o código do repositório para dentro do container
+# Copia TODO o código pro container
 COPY . .
 
-# AGORA vem o pulo do gato:
-# Entramos na pasta vfacil, como você faz localmente com "cd vfacil"
-WORKDIR /app/vfacil
+# ADICIONA /app/vfacil no PYTHONPATH
+# Assim o Python consegue fazer "import vfacil_api"
+ENV PYTHONPATH="${PYTHONPATH}:/app/vfacil"
 
-# Expõe a porta usada pela API
+# Expõe a porta da API
 EXPOSE 8000
 
 # Sobe a API FastAPI com Uvicorn
-# Usa EXATAMENTE o mesmo que você roda na sua máquina:
-#   uvicorn vfacil_api.main:app --reload
 CMD ["uvicorn", "vfacil_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
