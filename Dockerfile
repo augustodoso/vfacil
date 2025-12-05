@@ -1,22 +1,19 @@
 # Imagem base do Python
 FROM python:3.11-slim
 
-# Pasta de trabalho base
+# Pasta de trabalho
 WORKDIR /app
 
-# (opcional, mas recomendado) instala o Tesseract pra OCR
+# (opcional, mas recomendado) instala Tesseract pra OCR
 RUN apt-get update && apt-get install -y tesseract-ocr && rm -rf /var/lib/apt/lists/*
 
-# Copia requirements e instala dependências
+# Copia e instala as dependências do backend
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia TODO o código pro container
-COPY . .
-
-# ADICIONA /app/vfacil no PYTHONPATH
-# Assim o Python consegue fazer "import vfacil_api"
-ENV PYTHONPATH="${PYTHONPATH}:/app/vfacil"
+# Copia SOMENTE o backend para o container
+# (pega vfacil/vfacil_api do repositório e coloca em /app/vfacil_api)
+COPY vfacil/vfacil_api ./vfacil_api
 
 # Expõe a porta da API
 EXPOSE 8000
