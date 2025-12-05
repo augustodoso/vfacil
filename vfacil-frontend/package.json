@@ -2,13 +2,10 @@
   "name": "vfacil-frontend",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://augustodoso.github.io/vfacil",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "build": "vite build --base=/",
+    "preview": "vite preview"
   },
   "dependencies": {
     "react": "^18.2.0",
