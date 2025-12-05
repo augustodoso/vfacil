@@ -1,7 +1,8 @@
 // vfacil-frontend/src/pages/Upload.jsx
 import { useState } from "react";
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+// 🔁 AGORA APONTA PARA O BACKEND NA RENDER
+const API_BASE_URL = "https://aurevix-nfe-api.onrender.com";
 
 function UploadPage() {
   const [file, setFile] = useState(null);
@@ -57,7 +58,6 @@ function UploadPage() {
         cnpj: data.dados?.CNPJ ?? "não identificado",
         valor: data.dados?.Valor ?? "não identificado",
         data: data.dados?.Data ?? "não identificada",
-        // 👇 usa o texto devolvido pelo backend
         texto_ocr: data.texto ?? data.texto_ocr ?? "",
         processado_em: data.processado_em ?? new Date().toISOString(),
       };
@@ -72,7 +72,6 @@ function UploadPage() {
     }
   }
 
-  // IA usando o TEXTO do OCR
   async function handleAnaliseIA() {
     setIaError("");
     setIaResult(null);
@@ -82,7 +81,6 @@ function UploadPage() {
       return;
     }
 
-    // Se tiver texto_ocr, manda ele. Se não, usa um fallback simples.
     const textoParaIA =
       lastOcr.texto_ocr && lastOcr.texto_ocr.trim().length > 0
         ? lastOcr.texto_ocr
@@ -136,8 +134,6 @@ Data de emissão: ${lastOcr.data}
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center py-8">
-      {/* header global vem do Navbar */}
-
       <main className="w-full max-w-4xl bg-neutral-900 rounded-2xl p-8 shadow-lg">
         <h2 className="text-2xl font-semibold text-center mb-6">
           Upload de Nota Fiscal
@@ -186,16 +182,11 @@ Data de emissão: ${lastOcr.data}
             </button>
           </div>
 
-          {/* Erros */}
           {uploadError && (
-            <p className="text-red-400 text-sm text-center">
-              {uploadError}
-            </p>
+            <p className="text-red-400 text-sm text-center">{uploadError}</p>
           )}
           {iaError && (
-            <p className="text-red-400 text-sm text-center">
-              {iaError}
-            </p>
+            <p className="text-red-400 text-sm text-center">{iaError}</p>
           )}
         </div>
 
