@@ -1,4 +1,4 @@
-# vfacil/vfacil_api/main.py
+# backend/vfacil_api/main.py
 
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,17 +16,14 @@ app = FastAPI(
 )
 
 # -----------------------------------------------------------
-# CORS – libera o frontend (Vite) em http://localhost:5173
+# CORS – libera acesso de QUALQUER ORIGEM (frontend local + Vercel)
+# Para portfólio está OK deixar assim. Depois, se quiser,
+# pode travar só para o domínio do Vercel.
 # -----------------------------------------------------------
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],      # libera geral
+    allow_credentials=False,  # se usar "*", precisa ser False
     allow_methods=["*"],
     allow_headers=["*"],
 )

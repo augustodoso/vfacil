@@ -1,7 +1,7 @@
 // vfacil-frontend/src/pages/Upload.jsx
 import { useState } from "react";
 
-// 🔁 AGORA APONTA PARA O BACKEND NA RENDER
+// Backend no Render
 const API_BASE_URL = "https://aurevix-nfe-api.onrender.com";
 
 function UploadPage() {
@@ -13,8 +13,8 @@ function UploadPage() {
   const [uploadError, setUploadError] = useState("");
   const [iaError, setIaError] = useState("");
 
-  const [lastOcr, setLastOcr] = useState(null); // resultado do /notas/upload
-  const [iaResult, setIaResult] = useState(null); // resultado do /notas/analisar
+  const [lastOcr, setLastOcr] = useState(null);
+  const [iaResult, setIaResult] = useState(null);
 
   const [history, setHistory] = useState([]);
 
@@ -26,6 +26,7 @@ function UploadPage() {
     setIaResult(null);
   }
 
+  // ========= OCR =========
   async function handleUploadOcr() {
     if (!file) {
       setUploadError("Selecione um arquivo de nota fiscal primeiro.");
@@ -39,14 +40,18 @@ function UploadPage() {
 
     try {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", file); // nome do campo igual ao backend
 
       const resp = await fetch(`${API_BASE_URL}/notas/upload`, {
         method: "POST",
         body: formData,
+        mode: "cors",
+        credentials: "omit",
       });
 
       if (!resp.ok) {
+        const txt = await resp.text();
+        console.error("Erro backend OCR:", resp.status, txt);
         throw new Error(`Erro HTTP ${resp.status}`);
       }
 
@@ -65,13 +70,14 @@ function UploadPage() {
       setLastOcr(ocrResumo);
       setHistory((prev) => [ocrResumo, ...prev]);
     } catch (err) {
-      console.error(err);
+      console.error("ERRO NO OCR:", err);
       setUploadError("Erro ao enviar o arquivo para OCR.");
     } finally {
       setIsUploading(false);
     }
   }
 
+  // ========= IA =========
   async function handleAnaliseIA() {
     setIaError("");
     setIaResult(null);
@@ -99,9 +105,13 @@ Data de emissão: ${lastOcr.data}
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ texto: textoParaIA }),
+        mode: "cors",
+        credentials: "omit",
       });
 
       if (!resp.ok) {
+        const txt = await resp.text();
+        console.error("Erro backend IA:", resp.status, txt);
         throw new Error(`Erro HTTP ${resp.status}`);
       }
 
@@ -124,7 +134,7 @@ Data de emissão: ${lastOcr.data}
         });
       }
     } catch (err) {
-      console.error(err);
+      console.error("ERRO NA IA:", err);
       setIaError("Erro ao analisar a nota com IA.");
       setIaResult(null);
     } finally {
@@ -203,16 +213,13 @@ Data de emissão: ${lastOcr.data}
                   {lastOcr.arquivo}
                 </p>
                 <p>
-                  <span className="font-semibold">CNPJ:</span>{" "}
-                  {lastOcr.cnpj}
+                  <span className="font-semibold">CNPJ:</span> {lastOcr.cnpj}
                 </p>
                 <p>
-                  <span className="font-semibold">Valor:</span>{" "}
-                  {lastOcr.valor}
+                  <span className="font-semibold">Valor:</span> {lastOcr.valor}
                 </p>
                 <p>
-                  <span className="font-semibold">Data:</span>{" "}
-                  {lastOcr.data}
+                  <span className="font-semibold">Data:</span> {lastOcr.data}
                 </p>
               </>
             ) : (
@@ -274,9 +281,7 @@ Data de emissão: ${lastOcr.data}
 
           <div className="bg-neutral-800 rounded-xl p-4 text-sm overflow-x-auto">
             {history.length === 0 ? (
-              <p className="text-gray-400">
-                Nenhuma nota processada ainda.
-              </p>
+              <p className="text-gray-400">Nenhuma nota processada ainda.</p>
             ) : (
               <table className="w-full text-left text-xs md:text-sm">
                 <thead className="text-gray-400 border-b border-neutral-700">
@@ -298,9 +303,7 @@ Data de emissão: ${lastOcr.data}
                       <td className="py-2 pr-4">{item.cnpj}</td>
                       <td className="py-2 pr-4">{item.valor}</td>
                       <td className="py-2 pr-4">{item.data}</td>
-                      <td className="py-2 pr-4">
-                        {item.processado_em}
-                      </td>
+                      <td className="py-2 pr-4">{item.processado_em}</td>
                     </tr>
                   ))}
                 </tbody>
